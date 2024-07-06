@@ -1,8 +1,10 @@
 name: Solar System Workflow
+
 env:
-  MONGO_URI: ‘mongodb+srv://supercluster.d83jj.mongodb.net/superData'
+  MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
   MONGO_USERNAME: superuser
   MONGO_PASSWORD: superPassword
+
 on: 
   workflow_dispatch:
   push:
@@ -11,48 +13,47 @@ on:
       - 'feature/*'
     
 jobs:
-    unit-testing:
-        name: Unit Testing
-        runs-on: ubuntu-latest
-        steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v4
+  unit-testing:
+    name: Unit Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-        - name: Setup NodeJS Version
-          uses: actions/setup-node@v3
-          with:
-            node-version: 20
+      - name: Setup NodeJS Version
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Adjust the version as per your requirements
     
-        - name: Install Dependencies
-          run: npm install
+      - name: Install Dependencies
+        run: npm install
     
-        - name: Unit Testing
-          run: npm test
+      - name: Unit Testing
+        run: npm test
           
-        - name: Archive Test Result
-          if: always()
-          uses: actions/upload-artifact@v3
-          with:
-            name: Mocha-Test-Result
-            path: test-results.xml
+      - name: Archive Test Result
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Mocha-Test-Result
+          path: test-results.xml
     
-    code-coverage:
-        runs-on: ubuntu-latest
-        steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v4
+  code-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-        - name: Install Dependencies
-          uses: npm install
+      - name: Install Dependencies
+        run: npm install
         
-        - name: running the code-coverage
-          uses: npm run code-coverage
+      - name: Running the Code Coverage
+        run: npm run code-coverage
         
-        - name: Archive code coverage 
-          if: always()
-          uses: actions/upload-artifact@v3
-          with:
-            name: Code-Coverage-Result
-            path: coverage
-            retention-days: 5
-
+      - name: Archive Code Coverage 
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Code-Coverage-Result
+          path: coverage
+          retention-days: 5

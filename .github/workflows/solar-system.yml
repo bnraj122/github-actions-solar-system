@@ -85,7 +85,7 @@ jobs:
         needs: docker
         runs-on: ubuntu-latest
         environment:
-          name: developments
+          name: development
         steps:
         - uses: actions/checkout@v4
         - uses: azure/setup-kubectl@v3

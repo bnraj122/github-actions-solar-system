@@ -85,7 +85,7 @@ jobs:
         needs: docker
         runs-on: ubuntu-latest
         environment:
-          name: development
+          name: developments
         steps:
         - uses: actions/checkout@v4
         - uses: azure/setup-kubectl@v3
@@ -95,4 +95,4 @@ jobs:
           with:
             method: kubeconfig
             kubeconfig: '${{ secrets.KUBECONFIG }}'
-        - run: kubectl version --short -o yaml
+        - run: kubectl get all -A
